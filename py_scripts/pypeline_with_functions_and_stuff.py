@@ -80,6 +80,11 @@ def transform_data_for_model(df):
     return df_for_return
 
 df_train_for_model = transform_data_for_model(df_train)
+df_train_for_model.loc[df_train_for_model['age_no_nan'] <= 16, 'Age_no_nan_groups'] = 0
+df_train_for_model.loc[(df_train_for_model['age_no_nan'] > 16) & (df_train_for_model['age_no_nan'] <= 32), 'Age_no_nan_groups'] = 1
+df_train_for_model.loc[(df_train_for_model['age_no_nan'] > 32) & (df_train_for_model['age_no_nan'] <= 48), 'Age_no_nan_groups'] = 2
+df_train_for_model.loc[(df_train_for_model['age_no_nan'] > 48) & (df_train_for_model['age_no_nan'] <= 64), 'Age_no_nan_groups'] = 3
+df_train_for_model.loc[ df_train_for_model['age_no_nan'] > 64, 'Age_no_nan_groups'] = 4
 df_train_for_model = df_train_for_model[['Survived', 'Pclass', 'SibSp', 'Parch', 'Fare', 'Embarked', 'name_part', 'cabin_letter', 'sex_binary', 'age_no_nan']]
 df_train_for_model = pd.get_dummies(df_train_for_model, prefix=['Embarked','name_part','cabin_letter'], columns=['Embarked','name_part','cabin_letter'])
 
